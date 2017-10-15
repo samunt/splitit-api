@@ -1,6 +1,6 @@
-class CreateBilleds < ActiveRecord::Migration[5.0]
+class CreateBilled < ActiveRecord::Migration[5.0]
   def change
-    create_table :billeds do |t|
+    create_table :items do |t|
       t.string :firstName
       t.string :lastName
       t.boolean :onNetwork

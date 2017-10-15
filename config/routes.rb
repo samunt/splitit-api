@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # bills endpoints
   resources :bills do
     # people who exist on a bill, and their endpoints
-    resources :billeds
+    resources :items
   end
 
   # auth endpoint

@@ -1,24 +1,24 @@
 
-# app/requests/billeds_spec.rb
+# app/requests/items_spec.rb
 require 'rails_helper'
 
-RSpec.describe 'billeds API' do
+RSpec.describe 'items API' do
   # Initialize the test data
   let!(:bil) { create(:bill) }
-  let!(:billeds) { create_list(:billed, 20, bill_id: bill.id) }
+  let!(:items) { create_list(:item, 20, bill_id: bill.id) }
   let(:bill_id) { bill.id }
-  let(:id) { billeds.first.id }
+  let(:id) { items.first.id }
 
-  # Test suite for GET /bills/:bill_id/billeds
-  describe 'GET /bills/:bill_id/billeds' do
-    before { get "/bills/#{bill_id}/billeds" }
+  # Test suite for GET /bills/:bill_id/items
+  describe 'GET /bills/:bill_id/items' do
+    before { get "/bills/#{bill_id}/items" }
 
     context 'when bill exists' do
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
 
-      it 'returns all bill billeds' do
+      it 'returns all bill items' do
         expect(json.size).to eq(20)
       end
     end
@@ -36,21 +36,21 @@ RSpec.describe 'billeds API' do
     end
   end
 
-  # Test suite for GET /bills/:bill_id/billeds/:id
-  describe 'GET /bills/:bill_id/billeds/:id' do
-    before { get "/bills/#{bill_id}/billeds/#{id}" }
+  # Test suite for GET /bills/:bill_id/items/:id
+  describe 'GET /bills/:bill_id/items/:id' do
+    before { get "/bills/#{bill_id}/items/#{id}" }
 
-    context 'when bill billed exists' do
+    context 'when bill item exists' do
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
 
-      it 'returns the billed' do
+      it 'returns the item' do
         expect(json['id']).to eq(id)
       end
     end
 
-    context 'when bill billed does not exist' do
+    context 'when bill item does not exist' do
       let(:id) { 0 }
 
       it 'returns status code 404' do
@@ -58,17 +58,17 @@ RSpec.describe 'billeds API' do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Billed/)
+        expect(response.body).to match(/Couldn't find Item/)
       end
     end
   end
 
-  # Test suite for PUT /bills/:bill_id/billeds
-  describe 'POST /bills/:bill_id/billeds' do
+  # Test suite for PUT /bills/:bill_id/items
+  describe 'POST /bills/:bill_id/items' do
     let(:valid_attributes) { { name: 'Visit Narnia', done: false } }
 
     context 'when request attributes are valid' do
-      before { post "/bills/#{bill_id}/billeds", params: valid_attributes }
+      before { post "/bills/#{bill_id}/items", params: valid_attributes }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -76,7 +76,7 @@ RSpec.describe 'billeds API' do
     end
 
     context 'when an invalid request' do
-      before { post "/bills/#{bill_id}/billeds", params: {} }
+      before { post "/bills/#{bill_id}/items", params: {} }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -88,24 +88,24 @@ RSpec.describe 'billeds API' do
     end
   end
 
-  # Test suite for PUT /bills/:bill_id/billeds/:id
-  describe 'PUT /bills/:bill_id/billeds/:id' do
+  # Test suite for PUT /bills/:bill_id/items/:id
+  describe 'PUT /bills/:bill_id/items/:id' do
     let(:valid_attributes) { { name: 'Mozart' } }
 
-    before { put "/bills/#{bill_id}/billeds/#{id}", params: valid_attributes }
+    before { put "/bills/#{bill_id}/items/#{id}", params: valid_attributes }
 
-    context 'when billed exists' do
+    context 'when item exists' do
       it 'returns status code 204' do
         expect(response).to have_http_status(204)
       end
 
-      it 'updates the billed' do
-        updated_billed = billed.find(id)
-        expect(updated_billed.name).to match(/Mozart/)
+      it 'updates the item' do
+        updated_item = item.find(id)
+        expect(updated_item.name).to match(/Mozart/)
       end
     end
 
-    context 'when the billed does not exist' do
+    context 'when the item does not exist' do
       let(:id) { 0 }
 
       it 'returns status code 404' do
@@ -113,14 +113,14 @@ RSpec.describe 'billeds API' do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find Billed/)
+        expect(response.body).to match(/Couldn't find Item/)
       end
     end
   end
 
   # Test suite for DELETE /bills/:id
   describe 'DELETE /bills/:id' do
-    before { delete "/bills/#{bill_id}/billeds/#{id}" }
+    before { delete "/bills/#{bill_id}/items/#{id}" }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
