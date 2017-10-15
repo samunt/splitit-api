@@ -18,27 +18,7 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-# [...]
-RSpec.configuration do |config|
-  # [...]
-  # add `FactoryGirl` methods
-  config.include FactoryGirl::Syntax::Methods
-  config.include RequestSpecHelper, type: :request
 
-  # start by truncating all the tables but then use the faster transaction strategy the rest of the time.
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  # start the transaction strategy as examples are run
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
-  end
-  # [...]
-end
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -67,7 +47,25 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  config.include RequestSpecHelper, type: :request
+  config.include RequestSpecHelper
+  config.include ControllerSpecHelper
+  config.include FactoryGirl::Syntax::Methods
+  # config.include RequestSpecHelper, type: :request
+  # config.include RequestSpecHelper
+  # config.include ControllerSpecHelper
+
+  # start by truncating all the tables but then use the faster transaction strategy the rest of the time.
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  # start the transaction strategy as examples are run
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
