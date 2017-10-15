@@ -31,7 +31,7 @@ RSpec.describe 'billeds API' do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find bill/)
+        expect(response.body).to match(/Couldn't find Bill/)
       end
     end
   end
@@ -58,7 +58,7 @@ RSpec.describe 'billeds API' do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find billed/)
+        expect(response.body).to match(/Couldn't find Billed/)
       end
     end
   end
@@ -113,7 +113,7 @@ RSpec.describe 'billeds API' do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find billed/)
+        expect(response.body).to match(/Couldn't find Billed/)
       end
     end
   end

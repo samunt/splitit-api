@@ -13,8 +13,8 @@ RSpec.describe 'Splitit API', type: :request do
 
     it 'returns bills' do
       # Note `json` is a custom helper to parse JSON responses
-      expect(JSON).not_to be_empty
-      # expect(JSON.size).to eq(10)
+      expect(json).not_to be_empty
+      expect(json.size).to eq(10)
     end
 
     it 'returns status code 200' do
@@ -45,7 +45,7 @@ RSpec.describe 'Splitit API', type: :request do
       end
 
       it 'returns a not found message' do
-        expect(response.body).to match(/Couldn't find bill/)
+        expect(response.body).to match(/Couldn't find Bill/)
       end
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe 'Splitit API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/bills', params: { title: 'Foobar', created_by: '3209482' } }
+      before { post '/bills', params: { title: 'Foobar' } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
