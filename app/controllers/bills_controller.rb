@@ -3,13 +3,13 @@ class BillsController < ApplicationController
 
   # GET /bills
   def index
-    @bills = Bill.all
+    @bills = current_user.bills
     json_response(@bills)
   end
 
   # POST /bills
   def create
-    @bill = Bill.create!(bill_params)
+    @bill = current_user.bills.create!(bill_params)
     json_response(@bill, :created)
   end
 
@@ -34,7 +34,7 @@ class BillsController < ApplicationController
 
   def bill_params
     # whitelist params
-    params.permit(:title, :created_by)
+    params.permit(:title)
   end
 
   def set_bill
