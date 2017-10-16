@@ -38,7 +38,7 @@ module V1
     end
 
     def set_bill
-      @bill = bill.find(params[:bill_id])
+      @bill = Bill.find(params[:bill_id])
     end
 
     def set_bill_item
