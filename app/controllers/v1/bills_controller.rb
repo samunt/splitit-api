@@ -35,7 +35,7 @@ module V1
 
     def bill_params
       # whitelist params
-      params.permit(:title)
+      params.permit(:title, :user_id)
     end
 
     def set_bill
